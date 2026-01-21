@@ -10,6 +10,7 @@ This repository is a patched version of Python 0.9.1 which fixes the multiplicat
 - Fixed int_mul integer overflow bug in src/intobject.c on 64-bit systems
 - Added -std=c89 to CFLAGS in Makefile for compatibility with GCC 15+
 - Added a `make install` target that installs to /opt/python091 by default (python is at /opt/python091/bin/py091), this can be changed with the INSTALL_DIR env variable.
+- Fixed PYTHONPATH to be relative to the INSTALL_DIR used in `make install` target
 
 ## Some tips to get you started
 
@@ -18,6 +19,6 @@ This repository is a patched version of Python 0.9.1 which fixes the multiplicat
 2. The `os` module does not exist here; use `posix` instead.
 3. The singular `=` sign is used for both assignment AND comparison (a nightmare, I know.)
 4. Some things may be unstable, it is not fully tested. I'll have to read through the whole codebase later.
-
+5. If you cannot import modules from the standard library, try setting the PYTHONPATH environment variable to the location of the `lib` directory. For example, to use a standard library from ~/py091/lib, run the command like this: `PYTHONPATH=~/py091/lib /path/to/python **args`
 
 > Original README is at README.original

@@ -70,7 +70,12 @@ RANLIB =	ranlib	# For BSD
 # the interpreter from the source/build directory as distributed will
 # find the library (admittedly a hack).
 
-DEFPYTHONPATH= .:/usr/local/lib/python:/ufs/guido/lib/python:../lib
+# patched by Arslaan Pathan, 2026-01-21
+# change DEFPYTHONPATH to the default INSTALL_DIR
+# used in the make install target I added at the
+# end of the file.
+INSTALL_DIR="/opt/python091"
+DEFPYTHONPATH= .:$(INSTALL_DIR)/lib:../lib
 
 
 # For "Pure" BSD Systems
@@ -518,8 +523,7 @@ glmodule.c:	cstubs cgen
 # make install target added by Arslaan Pathan
 # 2026-01-21
 # installs into /opt/python091 by default
-
-INSTALL_DIR = /opt/python091
+# INSTALL_DIR is defined above, next to DEFPYTHONPATH
 
 install: python
 	install -d $(INSTALL_DIR)
