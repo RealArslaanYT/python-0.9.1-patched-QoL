@@ -183,6 +183,8 @@ int_sub(v, w)
 	return newintobject(x);
 }
 
+/* int_mul patched by Arslaan Pathan on 2026-01-21
+   to fix integer overflow on 64-bit systems */
 static object *
 int_mul(v, w)
 	intobject *v;
@@ -197,7 +199,10 @@ int_mul(v, w)
 	a = v->ob_ival;
 	b = ((intobject *)w) -> ob_ival;
 	x = (double)a * (double)b;
-	if (x > 0x7fffffff || x < (double) (long) 0x80000000)
+        /* hardcode 32-bit integer limit as an integer
+           instead of using integer-width dependent
+           constants such as 0x7fffffff and 0x80000000 */
+	if (x > 2147483647 || x < (double) (long) -2147483648)
 		return err_ovf();
 	return newintobject(a * b);
 }

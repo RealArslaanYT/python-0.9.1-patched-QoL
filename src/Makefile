@@ -180,7 +180,6 @@ DEFPYTHONPATH= .:/usr/local/lib/python:/ufs/guido/lib/python:../lib
 #RL_LIBS=	$(LIBREADLINE) $(LIBALLOCA) $(LIBTERMCAP)
 #RL_LIBDEPS=	$(LIBREADLINE) $(LIBALLOCA)
 
-
 # STDWIN Option
 # =============
 #
@@ -378,6 +377,9 @@ GENSOURCES=	acceler.c fgetsintr.c grammar1.c \
 		firstsets.c grammar.c metagrammar.c pgen.c \
 		pgenmain.c printgrammar.c
 
+# patched by Arslaan Pathan 2026-01-21
+# use -std=c89 so it compiles with modern cc/gcc
+CFLAGS="-std=c89"
 
 # Main Targets
 # ============
@@ -505,3 +507,31 @@ glmodule.c:	cstubs cgen
 
 #graminit.c graminit.h:	Grammar python_gen
 #		python_gen Grammar
+
+
+# ALL CODE PAST HERE IS NOT WRITTEN NOR ENDORSED
+# BY THE PYTHON SOFTWARE FOUNDATION,
+# THE STICHTING MATHEMATISCH CENTRUM,
+# THE CWI,
+# OR ANY OF IT'S/THEIR SUBSIDIARIES
+
+# make install target added by Arslaan Pathan
+# 2026-01-21
+# installs into /opt/python091 by default
+
+INSTALL_DIR = /opt/python091
+
+install: python
+	install -d $(INSTALL_DIR)
+	install -d $(INSTALL_DIR)/bin
+	install -d $(INSTALL_DIR)/lib
+	install -m 755 python $(INSTALL_DIR)/bin/py091
+	install -m 644 ../lib/* $(INSTALL_DIR)/lib
+	@echo
+	@echo "----- Python 0.9.1 (patched, QoL improvements) -----"
+	@echo "-----             by Arslaan Pathan            -----"
+	@echo "Installed python 0.9.1 to $(INSTALL_DIR)"
+	@echo "Note: you may need to add $(INSTALL_DIR)/bin to your PATH"
+	@echo "Run the py091 command to get started!"
+
+
