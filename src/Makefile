@@ -74,7 +74,7 @@ RANLIB =	ranlib	# For BSD
 # change DEFPYTHONPATH to the default INSTALL_DIR
 # used in the make install target I added at the
 # end of the file.
-INSTALL_DIR="/opt/python091"
+INSTALL_DIR= /opt/python091
 DEFPYTHONPATH= .:$(INSTALL_DIR)/lib:../lib
 
 
